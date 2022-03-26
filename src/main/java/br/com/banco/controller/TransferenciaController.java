@@ -11,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
 import java.util.List;
 
 @CrossOrigin
@@ -29,8 +28,8 @@ public class TransferenciaController {
             @RequestParam(defaultValue = "0000-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataInicio,
             @RequestParam(defaultValue = "9999-12-31") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataFim){
         return new ResponseEntity<>(
-                (operador.equals("") && dataInicio.getYear()==0) ?  service.read(id) :
-                (dataInicio.getYear()>0) ? service.read(id,dataInicio,dataFim) :
+                (operador.equals("") && dataInicio.getYear()==0 && dataFim.getYear()==0) ?  service.read(id) :
+                (operador.equals("")) ? service.read(id,dataInicio,dataFim) :
                 service.read(id,operador,dataInicio,dataFim)
                 ,HttpStatus.OK);
     }
